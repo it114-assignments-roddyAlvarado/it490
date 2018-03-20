@@ -245,7 +245,7 @@ function doLogin($username, $password) {
 		
 		} else {
 			$response = '401';
-			$log = "$date $time Response Code 401: Username $username, not authorized.\n";
+			$log = "$date $time Response Code 401: Username $username, not authorized.";
 			file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 		return $response;
@@ -253,7 +253,7 @@ function doLogin($username, $password) {
 	
 	} else {
 		$response = "404";
-		$log = "$date $time Response Code 404: Username not found.\n";
+		$log = "$date $time Response Code 404: Username not found.";
 
 		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 		return $response;
@@ -306,7 +306,7 @@ function doRegister($username, $password, $firstname, $lastname) {
 
 	if (!empty($row)) {
 		$response = "302";
-		$log = "$date $time Response Code 302: Username $username already registered.\n";
+		$log = "$date $time Response Code 302: Username $username already registered.";
 		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 		return $response;
@@ -325,7 +325,7 @@ function doRegister($username, $password, $firstname, $lastname) {
 		$statement->execute();
 
 		$response = "$username";
-		$log = "$date $time Response Code 201: Email $email successfully added to the database. \n";
+		$log = "$date $time Response Code 201: Email $email successfully added to the database.";
 		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 		return $response;
