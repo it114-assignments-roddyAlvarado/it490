@@ -88,7 +88,11 @@ function requestProcessor($request) {
 
 function search($beerSearch) {
 
-	echo "Searching from the API...";
+	$date = date("Y-m-d");
+	$time = date("h:m:sa");
+
+	$log = "{$date}, {$time}: Searching from the API...";
+	file_put_contents("log.txt", $log);
 
 	$client = new rabbitMQClient("testRabbitMQ.ini", "Backend");
 
@@ -98,6 +102,7 @@ function search($beerSearch) {
 	$request['message'] = 'API Search for all the beers';
 
 	$api_request = $client->send_request($request);
+
 	var_dump($api_request);
 	return $api_request;
 
@@ -155,14 +160,19 @@ function searchCategory($categorySearch) {
 // Insert Beer into LOCAL database for users
 function insertBeer($name, $description, $type, $available, $category) {
 
+	$date = date("Y-m-d");
+	$time = date("h:m:sa");
+
 	try {
-		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
+		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo "Connected Successsfully".PHP_EOL;
+		echo "$date, $time: Connected Successsfully".PHP_EOL;
+		file_put_contents("log.txt", $log);
 
 	} catch (PDOException $e) {
-		echo "Connection Failed: ". $e->getMessage();
+		echo "$date, $time: Connection Failed: ". $e->getMessage();
+		file_put_contents("log.txt", $log);
 
 	}
 
@@ -191,10 +201,12 @@ function doLogin($username, $password) {
 		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo "Connected Successsfully".PHP_EOL;
+		echo "$date, $time: Connected Successsfully".PHP_EOL;
+		file_put_contents("log.txt", $log);
 
 	} catch (PDOException $e) {
-		echo "Connection Failed: ". $e->getMessage();
+		echo "$date, $time: Connection Failed: ". $e->getMessage();
+		file_put_contents("log.txt", $log);
 
 	}
 
@@ -214,13 +226,13 @@ function doLogin($username, $password) {
 			$response->execute();
 
 			$row = $response->fetchAll();
-
+			file_put_contents("log.txt", $log);
 			return $row;
 		
 		} else {
 			$response = '401';
 			$log = "$date $time Response Code 401: Username $username, not authorized.\n";
-			
+			file_put_contents("log.txt", $log);
 
 		return $response;
 		}
@@ -229,6 +241,7 @@ function doLogin($username, $password) {
 		$response = "404";
 		$log = "$date $time Response Code 404: Username not found.\n";
 
+		file_put_contents("log.txt", $log);
 		return $response;
 		
 	
@@ -248,10 +261,12 @@ function doRegister($username, $password, $firstname, $lastname) {
 		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo "Connected Successsfully".PHP_EOL;
+		echo "$date, $time: Connected Successsfully".PHP_EOL;
+		file_put_contents("log.txt", $log);
 
 	} catch (PDOException $e) {
-		echo "Connection Failed: ". $e->getMessage();
+		echo "$date, $time: Connection Failed: ". $e->getMessage();
+		file_put_contents("log.txt", $log);
 
 	}
 
@@ -264,6 +279,7 @@ function doRegister($username, $password, $firstname, $lastname) {
 	if (!empty($row)) {
 		$response = "302";
 		$log = "$date $time Response Code 302: Username $username already registered.\n";
+		file_put_contents("log.txt", $log);
 
 		return $response;
 
@@ -282,6 +298,7 @@ function doRegister($username, $password, $firstname, $lastname) {
 
 		$response = "$username";
 		$log = "$date $time Response Code 201: Email $email successfully added to the database. \n";
+		file_put_contents("log.txt", $log);
 
 		return $response;
 
@@ -297,10 +314,12 @@ function getProfile($username) {
 		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo "Connected Successsfully".PHP_EOL;
+		echo "$date, $time: Connected Successsfully".PHP_EOL;
+		file_put_contents("log.txt", $log);
 
 	} catch (PDOException $e) {
-		echo "Connection Failed: ". $e->getMessage();
+		echo "$date, $time: Connection Failed: ". $e->getMessage();
+		file_put_contents("log.txt", $log);
 
 	}
 
