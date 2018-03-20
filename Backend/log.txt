@@ -1,0 +1,12 @@
+2018-03-20 02:03:02am Response Code 404: Username not found.
+2018-03-20, 02:03:41am: Connected Successsfully
+2018-03-20 02:03:41am Response Code 404: Username not found.
+
+2018-03-20, 02:03:53am: Connected Successsfully
+2018-03-20 02:03:53am Response Code 202: Success!
+2018-03-20, 02:03:08am: Connected Successsfully
+2018-03-20 02:03:08am Response Code 202: Success!
+User has logged out
+2018-03-20, 02:03:12am: Connected Successsfully
+2018-03-20 02:03:12am Response Code 202: Success!
+User has logged out

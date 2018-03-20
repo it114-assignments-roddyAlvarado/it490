@@ -17,7 +17,7 @@ function requestProcessor($request) {
 			return doLogin($request['username'], $request['password']);
 
 		case "logout":
-			return doLogout($request['logout']);
+			return doLogout($request['username']);
 
 		case "profile":
 			return getProfile($request['username']);
@@ -92,7 +92,7 @@ function search($beerSearch) {
 	$time = date("h:m:sa");
 
 	$log = "{$date}, {$time}: Searching from the API...";
-	file_put_contents("log.txt", $log);
+	file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	$client = new rabbitMQClient("testRabbitMQ.ini", "Backend");
 
@@ -115,10 +115,16 @@ function searchCategory($categorySearch) {
 		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo "Connected Successsfully".PHP_EOL;
+		echo "$date, $time: Connected Successsfully".PHP_EOL;
+		$log = "$date, $time: Connected Successsfully";
+
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	} catch (PDOException $e) {
-		echo "Connection Failed: ". $e->getMessage();
+		echo "$date, $time: Connection Failed: ". $e->getMessage();
+		$log = "$date, $time: Connection Failed: ". $e->getMessage();
+		
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	}
 
@@ -168,11 +174,15 @@ function insertBeer($name, $description, $type, $available, $category) {
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "$date, $time: Connected Successsfully".PHP_EOL;
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connected Successsfully";
+
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	} catch (PDOException $e) {
 		echo "$date, $time: Connection Failed: ". $e->getMessage();
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connection Failed: ". $e->getMessage();
+		
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	}
 
@@ -202,11 +212,15 @@ function doLogin($username, $password) {
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "$date, $time: Connected Successsfully".PHP_EOL;
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connected Successsfully";
+
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	} catch (PDOException $e) {
 		echo "$date, $time: Connection Failed: ". $e->getMessage();
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connection Failed: ". $e->getMessage();
+		
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	}
 
@@ -226,13 +240,13 @@ function doLogin($username, $password) {
 			$response->execute();
 
 			$row = $response->fetchAll();
-			file_put_contents("log.txt", $log);
+			file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 			return $row;
 		
 		} else {
 			$response = '401';
 			$log = "$date $time Response Code 401: Username $username, not authorized.\n";
-			file_put_contents("log.txt", $log);
+			file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 		return $response;
 		}
@@ -241,11 +255,21 @@ function doLogin($username, $password) {
 		$response = "404";
 		$log = "$date $time Response Code 404: Username not found.\n";
 
-		file_put_contents("log.txt", $log);
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 		return $response;
 		
 	
 	}
+
+}
+
+function doLogout($username) {
+
+	$date = date("Y-m-d");
+	$time = date("h:m:sa");
+
+	$log = "$date, $time: User has logged out";
+	file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 }
 
@@ -262,11 +286,15 @@ function doRegister($username, $password, $firstname, $lastname) {
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "$date, $time: Connected Successsfully".PHP_EOL;
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connected Successsfully";
+
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	} catch (PDOException $e) {
 		echo "$date, $time: Connection Failed: ". $e->getMessage();
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connection Failed: ". $e->getMessage();
+		
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	}
 
@@ -279,7 +307,7 @@ function doRegister($username, $password, $firstname, $lastname) {
 	if (!empty($row)) {
 		$response = "302";
 		$log = "$date $time Response Code 302: Username $username already registered.\n";
-		file_put_contents("log.txt", $log);
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 		return $response;
 
@@ -298,7 +326,7 @@ function doRegister($username, $password, $firstname, $lastname) {
 
 		$response = "$username";
 		$log = "$date $time Response Code 201: Email $email successfully added to the database. \n";
-		file_put_contents("log.txt", $log);
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 		return $response;
 
@@ -315,11 +343,15 @@ function getProfile($username) {
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "$date, $time: Connected Successsfully".PHP_EOL;
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connected Successsfully";
+
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	} catch (PDOException $e) {
 		echo "$date, $time: Connection Failed: ". $e->getMessage();
-		file_put_contents("log.txt", $log);
+		$log = "$date, $time: Connection Failed: ". $e->getMessage();
+		
+		file_put_contents("log.txt", $log.PHP_EOL, FILE_APPEND | LOCK_EX);
 
 	}
 

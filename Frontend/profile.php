@@ -22,6 +22,12 @@ if (!empty($search)) {
 
 if (isset($_POST['logout'])) {
 	session_unset();
+
+	$request['type'] = 'logout';
+	$request['username'] = $username;
+	$request['message'] = '$username has logged out';
+	$response = $client->send_request($request);
+
 	header("Location: index.view.php");
 	exit();
 
