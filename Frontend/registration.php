@@ -10,7 +10,7 @@ $date = date("Y-m-d", time());
 $username = htmlspecialchars($_POST['username']);
 $password = htmlspecialchars($_POST['password']);
 $confirmPassword = htmlspecialchars($_POST['confirmPassword']);
-$email = htmlspecialchars($_POST['email']);
+// $email = htmlspecialchars($_POST['email']);
 $firstname = htmlspecialchars($_POST['firstname']);
 $lastname = htmlspecialchars($_POST['lastname']);
 
@@ -19,7 +19,7 @@ $validateError = '';
 
 if (isset($_POST['register'])) {
 
-	if ((empty($username)) or ((empty($email)) or ((empty($password))) or ((empty($firstname))) or ((empty($lastname))))) {
+	if ((empty($username)) or ((empty($password))) or ((empty($firstname))) or ((empty($lastname))))) {
 		$missingError = "Oops! You are missing some fields."; 
 	
 		if ($confirmPassword != $password) {
@@ -35,7 +35,7 @@ if (isset($_POST['register'])) {
 		$request['type'] = "register";
 		$request['username'] = $username;
 		$request['password'] = $password;
-		$request['email'] = $email;
+		// $request['email'] = $email;
 		$request['firstname'] = $firstname;
 		$request['lastname'] = $lastname;
 		$request['message'] = "'{$username}' has been registered '{$date}'";

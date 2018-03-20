@@ -1,8 +1,5 @@
 <?php
 
-$database = require 'config.php';
-
-
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
@@ -27,7 +24,7 @@ function requestProcessor($request) {
 
 		case "register":
 			print_r($request);
-			return doRegister($request['username'], $request['email'], $request['password'], $request['firstname'], $request['lastname']);
+			return doRegister($request['username'], $request['password'], $request['firstname'], $request['lastname']);
 
 		case "search":
 			return search($request['search']);
@@ -110,8 +107,8 @@ function search($beerSearch) {
 function searchCategory($categorySearch) {
 	
 	try {
-		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "Connected Successsfully".PHP_EOL;
 
@@ -160,7 +157,7 @@ function insertBeer($name, $description, $type, $available, $category) {
 
 	try {
 		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "Connected Successsfully".PHP_EOL;
 
@@ -191,8 +188,8 @@ function doLogin($username, $password) {
 	$time = date("h:m:sa");
 
 	try {
-		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "Connected Successsfully".PHP_EOL;
 
@@ -223,6 +220,7 @@ function doLogin($username, $password) {
 		} else {
 			$response = '401';
 			$log = "$date $time Response Code 401: Username $username, not authorized.\n";
+			
 
 		return $response;
 		}
@@ -239,7 +237,7 @@ function doLogin($username, $password) {
 }
 
 
-function doRegister($username, $email, $password, $firstname, $lastname) {
+function doRegister($username, $password, $firstname, $lastname) {
 
 	$date = date("Y-m-d");
 	$time = date("h:m:sa");
@@ -247,8 +245,8 @@ function doRegister($username, $email, $password, $firstname, $lastname) {
 	$hash = password_hash($password, PASSWORD_DEFAULT, $options);
 
 	try {
-		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "Connected Successsfully".PHP_EOL;
 
@@ -296,8 +294,8 @@ function getProfile($username) {
 	$time = date("h:m:sa");
 
 	try {
-		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO('mysql: host=192.168.1.215; dbname=HOP', "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "Connected Successsfully".PHP_EOL;
 
