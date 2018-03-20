@@ -22,6 +22,11 @@
 			<div class="profile">
 				<h1><span id="username"><?php echo $username; ?></span></h1>
 				<span id="name"><?php echo $firstname . ' ' .$lastname; ?></span>
+				
+				<form method="post" action="favorites.php">
+					<input type="submit" class=" logout btn btn-outline-danger btn-sm" name='favorites' value="Favorites">
+				</form>
+				
 				<form method="post" action="profile.php">
 					<input type="submit" class=" logout btn btn-outline-danger btn-sm" name='logout' value="Log out">
 				</form>
