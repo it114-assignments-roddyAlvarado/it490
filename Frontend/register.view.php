@@ -56,7 +56,7 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-md-12">
-						<input type="submit" class="btn btn-success btn-lg btn-block" value="CREATE AN ACCOUNT" name="register">
+						<input type="submit" class="btn btn-success btn-lg btn-block" value="Create Account" name="register">
 					</div>
 				</div>
 			</form>

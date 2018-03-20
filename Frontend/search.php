@@ -6,11 +6,13 @@ require_once('rabbitMQLib.inc');
 
 $client = new rabbitMQClient("testRabbitMQ.ini", "Frontend");
 
-if (isset($_POST['beerName'])){
+$search = htmlspecialchars($_POST['search']);
+
+if (isset($search)){
 	$request = array();
-	$request['type'] = "searchBeer";
-	$request['searchBeer'] = $_POST['beerName'];
-	$request['message'] = 'Beer Search';
+	$request['type'] = 'search';
+	$request['search'] = $search;
+	$request['message'] = '{$username} searched for {$search}';
 
 	$response = $client->send_request($request);
 

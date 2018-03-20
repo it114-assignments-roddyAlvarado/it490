@@ -26,8 +26,8 @@ function requestProcessor($request) {
 			print_r($request);
 			return doRegister($request['username'], $request['email'], $request['password'], $request['firstname'], $request['lastname']);
 
-		case "searchBeer":
-			return searchBeer($request['searchBeer']);
+		case "search":
+			return search($request['search']);
 
 		case "searchCategory":
 			return searchCategory($request['searchCategory']);
@@ -39,7 +39,7 @@ function requestProcessor($request) {
 
 // Functions for beer related
 // Searches for specific beer
-function searchBeer($beerSearch) {
+/* function search($beerSearch) {
 
 	try {
 		$pdo = new PDO("mysql:host=localhost;dbname=HOP", "root", "root");
@@ -84,7 +84,24 @@ function searchBeer($beerSearch) {
 		return $row;
 	}
 }
+*/
 
+function search($beerSearch) {
+
+	echo "Searching from the API...";
+
+	$client = new rabbitMQClient("testRabbitMQ.ini", "Backend");
+
+	$request = array();
+	$request['type'] = "apiBeerSearch";
+	$request['searchAPI'] = urlencode($beerSearch);
+	$request['message'] = 'API Search for all the beers';
+
+	$api_request = $client->send_request($request);
+	var_dump($api_request);
+	return $api_request;
+
+}
 
 // Searches for categories of beers
 function searchCategory($categorySearch) {
@@ -186,6 +203,7 @@ function doLogin($username, $password) {
 
 	if (!empty($row)) {
 		if (password_verify($password, $row[0]["password"])) {
+			$response = "200";
 			$log = "$date $time Response Code 202: Success!";
 
 			$response = $pdo->prepare("SELECT username, firstname, lastname FROM users WHERE username = '{$username}'");

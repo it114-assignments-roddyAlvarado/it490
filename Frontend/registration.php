@@ -17,8 +17,8 @@ $lastname = htmlspecialchars($_POST['lastname']);
 $missingError = '';
 $validateError = '';
 
-
 if (isset($_POST['register'])) {
+
 	if ((empty($username)) or ((empty($email)) or ((empty($password))) or ((empty($firstname))) or ((empty($lastname))))) {
 		$missingError = "Oops! You are missing some fields."; 
 	
@@ -29,7 +29,7 @@ if (isset($_POST['register'])) {
 
 		require 'register.view.php';
 	
-	} else {
+	}  else {
 
 		$request = array();
 		$request['type'] = "register";
@@ -42,7 +42,8 @@ if (isset($_POST['register'])) {
 
 		$response = $client->send_request($request);
 
-		require 'index.view.php';
+		header("Location: index.view.php");
+		exit();
 		
 	}
 } 

@@ -10,9 +10,9 @@
 	<nav class="navbar navbar-dark bg-success justify-content-between">
 		<div class="container">
 			<h2 class="title">HOPS</h2>
-			<form class="form-inline" method="post" action="profile.php">
+			<form class="form-inline" method="post" action="search.php">
 				<input class="form-control mr-sm-2" type="search" placeholder="Find Beers or Breweries" aria-label="Search" name='search'>
-				<button class="btn btn-default my-2 my-sm-2" type="submit">Search</button>
+				<input class="btn btn-default my-2 my-sm-2" type="submit" value="Search">
 		  	</form>
 		  </div>
 	</nav>
@@ -25,8 +25,6 @@
 				<form method="post" action="profile.php">
 					<input type="submit" class=" logout btn btn-outline-danger btn-sm" name='logout' value="Log out">
 				</form>
-				
-				
 			</div>
 		</div>
 
