@@ -1,5 +1,8 @@
 <?php
 
+$database = require 'config.php';
+
+
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
@@ -105,16 +108,18 @@ function search($beerSearch) {
 
 // Searches for categories of beers
 function searchCategory($categorySearch) {
+	
 	try {
-		$pdo = new PDO("mysql:host=localhost;dbname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo 'Connected Successfully'.PHP_EOL;
+		echo "Connected Successsfully".PHP_EOL;
 
 	} catch (PDOException $e) {
-		echo "Connection Failed: " . $e->getMessage();
-	
+		echo "Connection Failed: ". $e->getMessage();
+
 	}
+
 
 	$result = $pdo->prepare("SELECT * FROM beer where category = '{$categorySearch}'");
 	$result->execute();
@@ -154,15 +159,16 @@ function searchCategory($categorySearch) {
 function insertBeer($name, $description, $type, $available, $category) {
 
 	try {
-		$pdo = new PDO("mysql:host=localhost;dbname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo 'Connected Successfully'.PHP_EOL;
+		echo "Connected Successsfully".PHP_EOL;
 
 	} catch (PDOException $e) {
-		echo "Connection Failed: " . $e->getMessage();
-	
+		echo "Connection Failed: ". $e->getMessage();
+
 	}
+
 
 	$statement = $pdo->prepare("INSERT INTO beer (name, description, type, available, category) VALUES (:name, :description, :type, :available, :category)");
 
@@ -185,15 +191,16 @@ function doLogin($username, $password) {
 	$time = date("h:m:sa");
 
 	try {
-		$pdo = new PDO("mysql:host=localhost;dbname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo "Connected Successfully".PHP_EOL;
-	
+		echo "Connected Successsfully".PHP_EOL;
+
 	} catch (PDOException $e) {
-		echo "Connection Failed:" . $e->getMessage();
-	
+		echo "Connection Failed: ". $e->getMessage();
+
 	}
+
 
 	$result = $pdo->prepare("SELECT password FROM users WHERE username = '{$username}'");
 
@@ -240,14 +247,16 @@ function doRegister($username, $email, $password, $firstname, $lastname) {
 	$hash = password_hash($password, PASSWORD_DEFAULT, $options);
 
 	try {
-		$pdo = new PDO("mysql:host=localhost;dbname=HOP", "root", "root");
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
+		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
 
-		echo "Connected Successfully".PHP_EOL;
+		echo "Connected Successsfully".PHP_EOL;
 
 	} catch (PDOException $e) {
 		echo "Connection Failed: ". $e->getMessage();
+
 	}
+
 
 	$result = $pdo->prepare("SELECT * FROM users where username = '{$username}'");
 	$result->execute();
@@ -287,7 +296,7 @@ function getProfile($username) {
 	$time = date("h:m:sa");
 
 	try {
-		$pdo = new PDO("mysql:host=localhost;dname=HOP", "root", "root");
+		$pdo = new PDO("mysql:host=192.168.1.215;dname=HOP", "root", "root");
 		$pdo->setAttribute(PDO::ATTR_ERRRMODE, PDO::ERRMODE_EXCEPTION);
 
 		echo "Connected Successsfully".PHP_EOL;
