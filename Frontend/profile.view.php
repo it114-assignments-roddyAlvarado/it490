@@ -24,7 +24,7 @@
 				<span id="name"><?php echo $firstname . ' ' .$lastname; ?></span>
 				
 				<form method="post" action="favorites.php">
-					<input type="submit" class=" logout btn btn-outline-danger btn-sm" name='favorites' value="Favorites">
+					<input type="submit" class=" btn btn-primary" name='favorites' value="Favorites">
 				</form>
 				
 				<form method="post" action="profile.php">
